@@ -1,0 +1,16 @@
+""" Medium """
+
+
+def jump(nums: list) -> bool:
+
+    distance = len(nums) - 1
+    count = 0
+    while count < distance:
+        count += nums[count]
+        if count == distance:
+            return True
+    return False
+
+
+if __name__ == '__main__':
+    print(jump([2,3,1,1,4]))
