@@ -16,31 +16,30 @@ class BinaryToGreaterSumTree:
 
     def __init__(self, root: TreeNode):
         self.root = root
+        self.val_list = []
         self.bst_to_gst()
 
     def bst_to_gst(self):
-        tree_count = self.get_tree_count(self.root)
-        self.change_node_values(self.root, tree_count)
+        self.val_list = self.ordered_tree_vals(self.root)
+        self.change_node_values(self.root)
 
-        self.get_tree_count(self.root)
+        self.ordered_tree_vals(self.root)
         return self.root
 
-    def change_node_values(self, node, tree_count):
+    def change_node_values(self, node):
         if node is None:
             return
-        BinaryToGreaterSumTree.change_node_values(self, node.left, tree_count)
-        tree_count = tree_count - node.val
-        node.val = tree_count
-        BinaryToGreaterSumTree.change_node_values(self, node.right, tree_count)
 
-    @staticmethod
-    def get_tree_count(node: TreeNode) -> int:
+        node.val = sum(self.val_list[self.val_list.index(node.val):])
+        BinaryToGreaterSumTree.change_node_values(self, node.left)
+        BinaryToGreaterSumTree.change_node_values(self, node.right)
+
+    def ordered_tree_vals(self, node: TreeNode):
         if node is None:
-            return 0
+            return []
         print(node.val)
-        return (node.val +
-                BinaryToGreaterSumTree.get_tree_count(node.left) +
-                BinaryToGreaterSumTree.get_tree_count(node.right))
+        val_list = self.ordered_tree_vals(node.left) + [node.val] + self.ordered_tree_vals(node.right)
+        return val_list
 
 
 if __name__ == '__main__':

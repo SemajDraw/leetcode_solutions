@@ -10,4 +10,4 @@ def palindrome_number(x: int) -> bool:
 
 
 if __name__ == "__main__":
-    print(palindrome_number(-101))
+    print(palindrome_number(110115))

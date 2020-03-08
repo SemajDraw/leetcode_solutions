@@ -1,5 +1,6 @@
 """ Easy """
 
+
 def numeral_value(letter):
     if letter == 'I':
         return 1
@@ -37,4 +38,12 @@ def roman_to_integer(roman: str) -> int:
 
 
 if __name__ == "__main__":
-    print(roman_to_integer('XXXI'))
+
+    while True:
+        print("Please enter a roman numeral to convert: ")
+        ip = input()
+        if ip == "exit":
+            break
+        else:
+            print("The number is: ", roman_to_integer(ip))
+
