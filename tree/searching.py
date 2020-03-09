@@ -20,8 +20,9 @@ class Tree:
 
         if self.head is None:
             self.createHeadNode(nodesVals[0])
+            del nodeVals[0]
 
-        for val in nodeVals[1:]:
+        for val in nodeVals:
             self.insertNode(val, self.head)
 
     def insertNode(self, val: int, node: Node) -> None:
@@ -56,10 +57,11 @@ class Tree:
             if node is None:
                 return
             self.inOrderSearch(node.left, val)
+            print(node.val)
             if node.val == val:
                 print("Node with value found at ", node)
                 return True
-            return self.inOrderSearch(node.right, val)
+            self.inOrderSearch(node.right, val)
 
         """
             Pre order (Root,Left,Right)
@@ -70,6 +72,7 @@ class Tree:
             if node.val == val:
                 print("Node with value found at ", node)
                 return True
+            print(node.val)
             self.preOrderSearch(node.left, val)
             self.preOrderSearch(node.right, val)
 
@@ -81,12 +84,39 @@ class Tree:
                 return
             self.postOrderSearch(node.left, val)
             self.postOrderSearch(node.right, val)
+            print(node.val)
             if node.val == val:
                 print("Node with value found at ", node)
                 return True
 
-    def breathFirstSearch(self):
-        pass
+    class BreathFirstSearch:
+
+        def search(self, node: Node, val: int):
+            if node is None:
+                print("Please enter a valid tree")
+                return False
+            height = self.height(node)
+            for i in range(1, height):
+                self.searchLevel(node, val, i)
+
+        def searchLevel(self, node: Node, val: int, level: int):
+            if node is None:
+                return
+            if node.val == val:
+                print("Node with value found at: ", node)
+                return True
+            print(node.val)
+            if level > 1:
+                self.searchLevel(node.left, val, level - 1)
+                self.searchLevel(node.right, val, level - 1)
+
+        def height(self, node):
+            if node is None:
+                return 0
+            else:
+                left_height = self.height(node.left) + 1
+                right_height = self.height(node.right) + 1
+            return left_height if left_height > right_height else right_height
 
     def binarySearch(self, node: Node, val: int) -> bool:
         if node is None:
@@ -95,6 +125,7 @@ class Tree:
         if val == node.val:
             print("Found at ", node)
             return True
+        print(node.val)
         if val < node.val:
             return self.binarySearch(node.left, val)
         if val > node.val:
@@ -121,3 +152,6 @@ if __name__ == '__main__':
 
     print("\nSearching tree in post order")
     tree.DepthFirstSearch().postOrderSearch(tree.head, 26)
+
+    print("\nBreadth first search")
+    tree.BreathFirstSearch().search(tree.head, 26)
