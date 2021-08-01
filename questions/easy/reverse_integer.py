@@ -1,4 +1,4 @@
-
+""" Easy """
 
 def reverse(x: int) -> int:
     str_num = str(x)
